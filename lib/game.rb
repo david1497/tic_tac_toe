@@ -8,7 +8,7 @@ class Game
 		@role_to_move = "X moves"
 		@role_changer = 0
 	end
-	
+
 	def player_sign(mark, x, y) #
 		@role_to_move = "#{mark} moves"
 		if @biarray[x][y] != "."
@@ -115,5 +115,6 @@ class Game
 			:detail => @role_to_move
 		}
 	end
+
 
 end
