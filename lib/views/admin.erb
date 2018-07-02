@@ -1,0 +1,43 @@
+<link href="<%= url('/admin_styles.css') %>" rel="stylesheet" type="text/css" />
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ADMIN PANEL</title>
+    <!-- link rel="stylesheet" type="text/css" href="/styles.css" -->
+  </head>
+  <body>
+  	<p>Welcome <img src="/images/admin.png"><a href="">admin@admin</a></p>
+    <h1>TIC-TAC-TOE ADMIN PANEL</h1>
+    <%# link_to 'New Game' %>
+    <div class="container">
+	    <div class="table_body">
+	    	<h2>List of games</h2>
+		    <table>
+			    <tr class="table_header">
+			    	<th>ID</th>
+			    	<th>State</th>
+			    	<th>Role</th>
+			    	<th>Created</th>
+			    	<th>Updated</th>
+			    	<th>CPU, %</th>
+			    	<th class="last_tab">Delete</th>
+			    </tr>
+			    <% @games_converted.each do |game| %>
+			    <a href="/game/1">
+				    <tr>
+				  		<td><%= game[:id] %></td>
+				  		<td><%= game[:game_state] %></td>
+				  		<td><%= game[:game_role] %></td>
+				  		<td></td>
+				  		<td></td>
+				  		<td><%= " #{100 / @games_converted.size} %" %></td>
+				  		<td><a href="/game/:id", method="delete"><img class="delete_icon" src="/images/remove.png"></a></td>
+				    </tr>
+			    </a>
+			    <% end %>
+		    </table>
+		  </div>
+	  </div>
+  </body>
+</html>

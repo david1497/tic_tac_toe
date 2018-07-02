@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'game'
+require 'byebug'
 
 describe Game, "A simple TicTacToe game implementation" do
   before :each do
@@ -14,7 +15,7 @@ describe Game, "A simple TicTacToe game implementation" do
 
   describe "#move" do
     it "marks the provided position on the board with the character whose next turn it is to move" do
-       @game.move(0, 0).should eql :ok
+       @game.move(0, 0).should eql :ok 
        board = @game.state[:board]
        board[0][0].should eql 'X'
 
@@ -120,10 +121,6 @@ describe Game, "A simple TicTacToe game implementation" do
       state[:board].flatten.all? { |c| ['.','X','O'].include? c }.should eql true
       state[:game_state].should eql :over
       state[:detail].should eql 'X won'
-
-      state[:board].flatten.all? { |c| ['.','X','O'].include? c }.should eql true
-      state[:game_state].should eql :over
-      state[:detail].should eql 'X won'
     end
 
     it "returns a { non-empty board, :over, 'O won' } state for a Game that ended with a victory for O" do
@@ -141,6 +138,48 @@ describe Game, "A simple TicTacToe game implementation" do
       state[:detail].should eql 'O won'
     end
 
+    it "returns a { non-empty board, :over, 'X won' } state for a Game that ended with a victory for X on the main diagonal" do
+      @game.move 0, 0
+      @game.move 0, 1
+      @game.move 1, 1
+      @game.move 0, 2
+      @game.move 2, 2
+
+      state = @game.state
+
+      state[:board].flatten.all? { |c| ['.','X','O'].include? c }.should eql true
+      state[:game_state].should eql :over
+      state[:detail].should eql 'X won'
+    end
+
+    it "returns a { non-empty board, :over, 'X won' } state for Game that ended with a victory for O on the main diagonal" do
+      @game.move 1, 0 
+      @game.move 0, 0
+      @game.move 2, 0
+      @game.move 1, 1
+      @game.move 2, 1
+      @game.move 2, 2
+
+      state = @game.state
+
+      state[:board].flatten.all? { |c| ['.','X','O'].include? c }.should eql true
+      state[:game_state].should eql :over
+      state[:detail].should eql 'O won'
+    end
+
+    it "returns a { non-empty board, :over, 'X won' } state for a Game that ended with a victory for X on the second diagonal" do
+      @game.move 0, 2
+      @game.move 0, 1
+      @game.move 1, 1
+      @game.move 1, 2
+      @game.move 2, 0
+
+      state = @game.state
+
+      state[:board].flatten.all? { |c| ['.','X','O'].include? c }.should eql true
+      state[:game_state].should eql :over
+      state[:detail].should eql 'X won'
+    end
     # TODO check that it correctly detects victories on lines, columns and diag's etc
   end
 end

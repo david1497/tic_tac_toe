@@ -1,0 +1,47 @@
+<link href="styles.css" rel="stylesheet" type="text/css" />
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TIC-TAC-TOE</title>
+  </head>
+  <body>
+    <h1>Welcome to the TIC-TAC-TOE Game</h1>
+    <div class="container">
+	    <div class="game_description">
+	    	<h2>Rules</h2>
+	    	<p><b>Tic-Tac-Toe</b> (also known as noughts and crosses or Xs and Os) is a paper-and-pencil game for <b>two players, X and O,</b> who take turns marking the spaces in a <b>3×3</b> grid. The player who succeeds in placing three of their marks in a <b>horizontal, vertical, or diagonal row</b> wins the game. <br>
+				The following example game is won by the first player, X:</p>
+	    	<img src="/images/example.png">
+	    	<p>Players soon discover that the best play from both parties leads to a <b>draw</b>. Hence, tic-tac-toe is most often played by young children.</p>
+	    </div>
+	    <div class="table_body">
+	    	<h2>List of best games</h2>
+	    	<form method="post" action="/game/new" class="game_description">
+    			<button>MultiPlayer</button>
+    		</form>
+    		<form action="/game/new" class="table_body" >
+    			<button>SinglePlayer</button>
+    		</form>
+		    <table>
+			    <tr class="table_header">
+			    	<th>ID</th>
+			    	<th>State</th>
+			    	<th>Role</th>
+			    	<th>Time</th>
+			    </tr>
+			    <% @games_converted.last(5).each do |game| %>
+			    <a href="/game/1">
+				    <tr>
+				  		<td><%= game[:id] %></td>
+				  		<td><%= game[:game_state] %></td>
+				  		<td><%= game[:game_role] %></td>
+				  		<td></td>
+				    </tr>
+			    </a>
+			    <% end %>
+		    </table>
+		  </div>
+	  </div>
+  </body>
+</html>

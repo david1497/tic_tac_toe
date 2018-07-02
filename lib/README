@@ -1,0 +1,35 @@
+--- TIC-TAC-TOE ---
+
+Currently is available just the SinglePlayer mode of the game
+
+Main ruby files:
+../lib
+	game.rb 
+		A ruby file that include all methods of the Game Class
+	http_game.rb
+		A file that icludes all web communication methods(GET, PUT, POST, DELETE)
+		>> ruby http_game.rb run the local game server on the port localhost:4567
+	computer_player.rb
+		A file that contain all methods belongs to the ComputerPlayer Class, this is for SinglePlayer game and it generates params for a random move
+
+
+Main view files:
+..lib/views
+	index.erb
+		A file with the main page of the game
+	game_by_id.erb
+		A file that contains the game board and the file with troubles between 27-37 lines
+
+
+Main stylesheet files:
+..lib/public
+	styles.css
+		A file wich containt all styles for the index page
+	game_view.css
+		A file that contain all styles for displaying the game board
+
+
+Routes:
+	index 				localhost:4567/
+	game_by_id		localhost:4567/game/game.id
+	admin_panel		localhost:4567/admin

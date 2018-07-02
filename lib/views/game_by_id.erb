@@ -1,0 +1,80 @@
+<link href="<%= url('/game_view.css') %>" rel="stylesheet" type="text/css" />
+<script src='https://code.jquery.com/jquery-git.min.js'></script>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GAME <%= @game_id %></title>
+</head>
+<body>
+  <div class="container">
+    <div class="game_header">
+      <span id="left">
+        <a href="/"><img src="/images/home.png">HOME</a>
+      </span>
+      <p>
+      <% if @game_move.size < 2 && @game_type == "multiplayer" %>
+        <%= "#{@game_move} turn " %>
+      <% elsif @game_move.size > 2 %>
+        <%= "#{@game_move}" %>
+      <% end %>
+      </p>
+      <span id="right">
+        <img src="/images/watch.png">
+      </span>
+    </div>
+    <br>
+      <script type="text/javascript">
+        <%#= if @game_state == :over %>
+          <%#= @params.each do |array| %>
+            <%# id = array[0] %>
+            var element = document.getElementsByClassName("a00"<%# array[0] %>);
+            // element[0].classList.add("second");
+            console.log(element);
+            console.log(element[0])
+          <%# end %>
+        <%# end %>
+      </script>
+    <table>
+    <% @game_board.each_with_index do |line, x| %>
+      <tr>
+        <% line.each_with_index do |cell, y| %>
+          <td class="<%= "a#{x}#{y}" %>">
+            <% if @game_move.size > 2 %>
+              <button disabled"><%= cell %></button>
+            <% else %>
+              <% if @game_type == "singleplayer" %>
+                <button class="btn_cell", id="<%= "#{x}""#{y}" %>", onclick="SinglePlayer('<%= "#{x}#{y}" %>')"><%= cell %></button>
+              <% else %>
+                <button disabled class="btn_cell", id="<%= "#{x}""#{y}" %>", onclick="MultiPlayer('<%= "#{x}#{y}" %>')"><%= cell %></button>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </table>
+    <% if @game_move.size > 2 %>
+      <form action="/game/new" class="table_body" >
+        <button class="new_game">New Game</button>
+      </form>
+    <% end %>
+  </div>
+  <script type="text/javascript">
+    function SinglePlayer(params){
+      var xhttp = new XMLHttpRequest();
+      var xy_splitted = params.split("");
+      var x = xy_splitted[0];
+      var y = xy_splitted[1];
+
+      xhttp.open("PUT", '/game/<%= @game_id %>', true);
+      xhttp.send(JSON.stringify({'posx': x, 'posy': y }));
+
+      document.getElementById(params).style.backgroundColor = "yellow";
+      
+      window.location.reload();
+      document.getElementById(params).disable = true;
+    }
+  </script>
+</body>
+</html>
